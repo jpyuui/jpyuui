@@ -1,1 +1,47 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Web Page</title>
+    <!-- 引入 React 和 React DOM 库 -->
+<script src="https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+      // 定义一个用于注入的 context
+      const UserContext = React.createContext();
+
+      // 使用 context 的 Provider 包装整个应用，将 user 对象作为参数传递
+      function App() {
+        const user = { name: 'Alice', email: 'alice@example.com' };
+        return (
+          <UserContext.Provider value={user}>
+            <div>
+              <h1>Hello, {user.name}</h1>
+              <UserProfile />
+            </div>
+          </UserContext.Provider>
+        );
+      }
+
+      // 使用 useContext 钩子访问 user 对象
+      function UserProfile() {
+        const user = React.useContext(UserContext);
+        return (
+          <div>
+            <p>Name: {user.name}</p>
+            <p>Email: {user.email}</p>
+          </div>
+        );
+      }
+
+      // 渲染 React 应用到页面上
+      ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+  </body>
+</html>
